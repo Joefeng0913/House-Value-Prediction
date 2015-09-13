@@ -1,0 +1,241 @@
+train <- read.csv("~/Desktop/Stat 101C/Final Project/train.csv", stringsAsFactors=FALSE) 
+test <- read.csv("~/Desktop/Stat 101C/Final Project/test.csv", stringsAsFactors=FALSE)
+
+
+
+#deed_type(Need to double check with the level problem)
+train$deed_type[train$deed_type %in% c("AD","WK","WS","BD","WH","ED","DV","PR","CD","TD","DJ","S ","TC","WF","JJ","CJ",
+                                       "DC","WV"," W","GJ","JW","WM","Q ","RA","PB","SA","VT","PD","PA","MD","RC")] <- "OTHER"
+test$deed_type[test$deed_type %in% c("AD","WK")] <- "OTHER"
+train$deed_type <- factor(train$deed_type)
+test$deed_type <- factor(test$deed_type)
+levels(test$deed_type)
+levels(train$deed_type)
+
+
+#mill_levy
+#setdiff(train$mill_levy,test$mill_levy)    #Find the different levels
+#setdiff(test$mill_levy,train$mill_levy)
+
+train$mill_levy[train$mill_levy %in% c("56.783","67.713","72.547","77.203","80.863","82.555","85.995",
+                                       "87.818","89.017","90.823","97.723","98.772",
+                                       "103.106","104.818","104.869")]<-"other"
+test$mill_levy[test$mill_levy %in% c("101.87","89.366")]<-"other"
+
+train$mill_levy<-factor(train$mill_levy)
+test$mill_levy<-factor(test$mill_levy)
+
+
+
+#builtYear
+levels(train$builtYear)[which(levels(train$builtYear)<"1900")]<-"other"
+levels(test$builtYear)[which(levels(test$builtYear)<"1900")]<-"other"
+train$builtYear<-factor(train$builtYear)
+test$builtYear<-factor(test$builtYear)
+
+
+#range
+train$range<-as.character(train$range)
+train$range[which(train$range=="74")]<-"73"
+train$range<-factor(train$range)
+test$range<-factor(test$range)
+
+
+
+#taxArea
+train$taxArea[train$taxArea %in% c(410,416,2806,194,1409,1015,3000,1366,2805,183,4600,259,
+                                   12,162,4250,1395,1351,3010,826,689,4252,4207,683,3002,   
+                                   20,116,4791,601,187,2826,260,2882,872,412,1018,41)]<-"other"
+test$taxArea[test$taxArea %in% c(4205,231,952)]<-"other"
+train$taxArea<-factor(train$taxArea)
+test$taxArea<-factor(test$taxArea)
+
+
+#section
+train$section<-factor(train$section)
+test$section<-factor(test$section)
+
+#township
+train$township<-factor(train$township)
+test$township<-factor(test$township)
+
+#designCodeDscr
+train$designCodeDscr<-factor(train$designCodeDscr)
+test$designCodeDscr<-factor(test$designCodeDscr)
+
+#lot
+train$lot[train$lot %in% setdiff(train$lot,test$lot)]<-"OTHER"
+test$lot[test$lot %in% setdiff(test$lot,train$lot)]<-"OTHER"
+train$lot<-factor(train$lot)
+test$lot<-factor(test$lot)
+
+
+#qualityCodeDscr
+train$qualityCodeDscr[train$qualityCodeDscr %in% c(" EXCELLENT", "EXCELLENT +",
+                                                   "EXCELLENT++","EXCEPTIONAL 1",
+                                                   "EXCEPTIONAL 2","EXCEPTIONAL 3",
+                                                   "FAIR"," GOOD +"," GOOD ++ ","LOW"
+                                                   ,"VERY GOOD +","VERY GOOD ++ ")]<-"OTHER"
+train$qualityCodeDscr<-factor(train$qualityCodeDscr)
+test$qualityCodeDscr[test$qualityCodeDscr %in% c(" EXCELLENT", "EXCELLENT +",
+                                                 " EXCELLENT++ ","EXCEPTIONAL 1",
+                                                 "EXCEPTIONAL 2","EXCEPTIONAL 3",
+                                                 "FAIR"," GOOD +"," GOOD ++ ","LOW"
+                                                 ,"VERY GOOD +","VERY GOOD ++ ")]<-"OTHER"
+test$qualityCodeDscr<-factor(test$qualityCodeDscr)
+
+
+
+#ConstCodeDscr
+train$ConstCodeDscr[train$ConstCodeDscr %in% c("PRECAST","BLOCK","STRAWBALE","VENEER","WOOD","STEEL",
+                                               "STUD-STUCCO","CONCRETE","UNKNOWN","VENEER","WOOD")]<-"OTHERS"
+test$ConstCodeDscr[test$ConstCodeDscr %in% c("UNKNOWN")]<-"OTHERS"
+
+train$ConstCodeDscr<-factor(train$ConstCodeDscr)
+test$ConstCodeDscr<-factor(test$ConstCodeDscr)
+
+#carStorageTypeDscr
+train$carStorageTypeDscr<-factor(train$carStorageTypeDscr)
+test$carStorageTypeDscr<-factor(test$carStorageTypeDscr)
+
+#AcDscr
+train$AcDscr<-factor(train$AcDscr)
+test$AcDscr<-factor(test$AcDscr)
+
+
+#ExtWallDscrPrim
+train$ExtWallDscrPrim<-factor(train$ExtWallDscrPrim)
+test$ExtWallDscrPrim<-factor(test$ExtWallDscrPrim)
+
+#ExtWallDscrSec 
+train$ExtWallDscrSec[train$ExtWallDscrSec %in% c("PAINTED BLOCK","CEMENT BOARD SIDING")]<-"OTHER"
+train$ExtWallDscrSec<-factor(train$ExtWallDscrSec)
+test$ExtWallDscrSec<-factor(test$ExtWallDscrSec)
+
+
+#IntWallDscr 
+train$IntWallDscr <-factor(train$IntWallDscr)
+test$IntWallDscr <-factor(test$IntWallDscr )
+
+
+#Roof_CoverDscr
+train$Roof_CoverDscr[train$Roof_CoverDscr %in% c("ROLL","BUILT-UP","TAR AND GRAVEL")]<-"OTHER"
+test$Roof_CoverDscr[test$Roof_CoverDscr %in% c("BUILT-UP","TAR AND GRAVEL")]<-"OTHER"
+train$Roof_CoverDscr<-factor(train$Roof_CoverDscr)
+test$Roof_CoverDscr<-factor(test$Roof_CoverDscr)
+
+#landUnitType
+train$landUnitType[train$landUnitType %in% c("UT","AC")]<-"OTHER"
+test$landUnitType[test$landUnitType %in% c("AC")]<-"OTHER"
+train$landUnitType<-factor(train$landUnitType)
+test$landUnitType<-factor(test$landUnitType)
+
+#HeatingDscr
+train$HeatingDscr[train$HeatingDscr %in% c("WARM & COOL AIR","AIR COND IN HEAT DUCTS",
+                                           "BASEMENT HOT WATER","ZONED HVAC")] <- "OTHER"
+train$HeatingDscr <- factor(train$HeatingDscr)
+test$HeatingDscr <- factor(test$HeatingDscr)
+
+#bsmtTypeDscr
+train$bsmtTypeDscr<-factor(train$bsmtTypeDscr)
+test$bsmtTypeDscr<-factor(test$bsmtTypeDscr)
+
+#block
+train$block[train$block %in% setdiff(train$block,test$block)]<-"OTHER"
+test$block[test$block %in% setdiff(test$block,train$block)]<-"OTHER"
+
+train$block<-factor(train$block)
+test$block<-factor(test$block)
+
+
+#landUnitValue (consistent unit)
+train[which(train$landUnitType=="AC"),"landUnitValue"]<-train[which(train$landUnitType=="AC"),"landUnitValue"]*43560
+test[which(test$landUnitType=="AC"),"landUnitValue"]=test[which(test$landUnitType=="AC"),"landUnitValue"]*43560
+
+
+
+
+
+#Subset the useful variables 
+newdata<-train[,c("totalActualVal","nh","section","range","builtYear","mill_levy","designCodeDscr",
+                  "taxArea","CompCode","ConstCodeDscr","qualityCodeDscr","bsmtSF","carStorageSF","nbrBedRoom",
+                  "GIS_sqft","mainfloorSF","TotalFinishedSF","Shape_Leng","landUnitValue",
+                  "Shape_Area","PCT_WHITE","PCT_BLACK","PCT_ASIAN","PCT_HISP")]
+
+
+subset<-train[,-c(1:3,5),drop=FALSE] #In this case, we are using almost all of variables
+test1<-test[,-c(1:3,5),drop=FALSE]
+set.seed(123)
+train2<-sample(1:87462,10000)
+train1<-subset[train2,]
+row.names(train1)<-1:nrow(train1)
+#cor<-cor(train1[sapply(train1,is.numeric)],use="pairwise.complete.obs")
+
+
+
+#Forward selection 
+full<-lm(totalActualVal~.,data=train1[complete.cases(train1),])
+null<-lm(totalActualVal~1,data=train1[complete.cases(train1),])
+step(null,scope=list(lower=null,upper=full),direction="forward")
+
+########################################### Main model using OLS
+fit<-lm(totalActualVal ~ qualityCodeDscr + taxArea + TotalFinishedSF + 
+          range + designCodeDscr + Shape_Leng + builtYear + PCT_BLACK + 
+          PCT_WHITE + HH_W_NONR + township + section + CompCode + mainfloorSF + 
+          nbrBedRoom + ExtWallDscrPrim + nbrThreeQtrBaths + bsmtSF + 
+          V_MIGRANT + V_R_NOTOCC + VACANT + PCT_ASIAN + GIS_sqft + 
+          Shape_Area + landUnitValue +carStorageSF, data=train1)
+summary(fit)
+########################################################
+
+
+
+
+
+#Bagging model
+library(randomForest)
+set.seed(1)
+bag.model<-randomForest(totalActualVal~.,data=newdata,mtry=28,ntree=500,nodesize=10,
+                        importance=TRUE,subset=train2)
+yhat.bag<-predict(bag.model,newdata=train[-train2,])
+sqrt(mean((yhat.bag-train$totalActualVal[-train2])^2))
+
+
+
+#RandomForest
+set.seed(1)
+RF.model<-randomForest(totalActualVal~.,data=newdata,importance=TRUE,
+                       ntree=300,nodesize=10,subset=train2)
+yhat.RF<-predict(RF.model,newdata=train[-train2,])
+sqrt(mean((yhat.RF-train$totalActualVal[-train2])^2))
+
+
+#Boosting (Final Model 1)
+library(gbm)
+set.seed(1)
+boost.model<-gbm(totalActualVal~.,data=train,distribution="gaussian",
+                 n.trees=1500,interaction.depth=15,cv.folds=3,bag.fraction=0.8,shrinkage=0.1)
+summary(boost.model)                 
+yhat.boost<-predict(boost.model,newdata=train[-train2,],n.trees=1500)
+sqrt(mean((yhat.boost-train$totalActualVal[-train2])^2))
+
+#Final Model  
+boost<-gbm(totalActualVal~.,data=train,distribution="gaussian",
+           n.trees=500,interaction.depth=10,cv.folds=3,bag.fraction=0.8,shrinkage=0.1)
+yhat.boost<-predict(boost,newdata=train[-train2,],n.trees=500)
+sqrt(mean((yhat.boost-train$totalActualVal[-train2])^2))
+
+
+junk<-predict(boost.model,newdata=test,n.trees=1500)
+head(junk)
+model2 <- as.data.frame(cbind(test$id,junk))
+names(model2) <- c("id","totalActualVal")
+write.csv(model2,file="model2.csv",row.names=FALSE)
+
+
+
+junk2<-predict(boost.model,newdata=test,n.trees=500)
+head(junk2)
+model3<-as.data.frame(cbind(test$id,junk))
+names(model3) <- c("id","totalActualVal")
+write.csv(model3,file="model3.csv",row.names=FALSE)
